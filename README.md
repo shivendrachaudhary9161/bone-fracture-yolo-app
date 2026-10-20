@@ -61,15 +61,12 @@ The dataset is not included in this repository by default. Anyone reproducing th
 
 ## Model Information
 
-The project uses **YOLOv8** for object detection.
+The repository includes both model files:
 
-The repository includes `yolov8n.pt`, which provides the base YOLOv8 model weights. The web application expects the project's trained weights at:
+- `yolov8n.pt` — the base YOLOv8 model weights.
+- `runs/detect/train/weights/best.pt` — the trained model weights used by the Flask application.
 
-`runs/detect/train/weights/best.pt`
-
-The base weights and trained weights serve different purposes. The trained `best.pt` file is required for the application's intended fracture detection inference.
-
-**Note:** The trained weights may need to be obtained separately if they are not included in the repository.
+Both model files are currently included in this repository. The application loads `best.pt` at startup, so keep it at the expected path when running the app.
 
 ## Project Structure
 
