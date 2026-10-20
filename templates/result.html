@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Result</title>
+
+    <style>
+        body {
+            font-family: Arial;
+            text-align: center;
+            background: #f4f6f9;
+        }
+
+        .card {
+            background: white;
+            padding: 20px;
+            margin: 20px auto;
+            width: 450px;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+        }
+
+        img {
+            width: 100%;
+            border-radius: 10px;
+        }
+    </style>
+</head>
+
+<body>
+
+<h2>🔍 Detection Result</h2>
+
+<div class="card">
+    <h3>Original</h3>
+    <img src="{{ url_for('static', filename='uploads/' + original_image) }}">
+
+    <h3>Detected</h3>
+    <img src="{{ url_for('static', filename='uploads/' + annotated_image) }}">
+
+    <h3>Result:</h3>
+    {% if predicted %}
+        <p style="color:red;">Fracture Detected</p>
+    {% else %}
+        <p style="color:green;">No Fracture</p>
+    {% endif %}
+
+    <div style="background:white; padding:15px; border-radius:10px; margin-top:20px;">
+    <h3>🧠 Detection Details</h3>
+
+    {% for d in detections %}
+        <p style="margin-bottom:15px;">
+            🦴 <b>{{ d.label }}</b><br>
+            
+            Confidence: 
+            <span style="color:blue;">
+                {{ (d.confidence * 100) | round(2) }}%
+            </span><br>
+            
+            Box: 
+            [{{ d.box[0] }}, {{ d.box[1] }}, {{ d.box[2] }}, {{ d.box[3] }}]
+        </p>
+    {% endfor %}
+</div>
+</div>
+
+<a href="/">Upload Again</a>
+
+</body>
+</html>
