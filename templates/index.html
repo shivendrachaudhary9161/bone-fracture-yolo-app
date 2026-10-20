@@ -1,100 +1,55 @@
+
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Bone Fracture Detection</title>
 
-    <style>
-        body {
-            font-family: Arial;
-            background: linear-gradient(to right, #74ebd5, #ACB6E5);
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-        }
-
-        .container {
-            background: white;
-            padding: 30px;
-            border-radius: 15px;
-            text-align: center;
-            width: 400px;
-            box-shadow: 0 10px 25px rgba(0,0,0,0.2);
-        }
-
-        button {
-            background: #4CAF50;
-            color: white;
-            padding: 10px 20px;
-            border-radius: 8px;
-            border: none;
-            cursor: pointer;
-        }
-
-        .loader {
-            border: 6px solid #f3f3f3;
-            border-top: 6px solid #3498db;
-            border-radius: 50%;
-            width: 40px;
-            height: 40px;
-            animation: spin 1s linear infinite;
-            display: none;
-            margin: auto;
-        }
-
-        @keyframes spin {
-            100% { transform: rotate(360deg); }
-        }
-
-        img {
-            width: 100%;
-            display: none;
-            margin-top: 10px;
-        }
-    </style>
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='css/style.css') }}">
 </head>
 
 <body>
-<div class="container">
-    <h2>🦴 Bone Fracture Detection</h2>
+    <div class="container">
+        <h2>🦴 Bone Fracture Detection</h2>
 
-    <form action="/predict" method="post" enctype="multipart/form-data">
+        <form action="/predict" method="post" enctype="multipart/form-data">
+            <input type="file" name="xray_image" id="fileInput" accept="image/*" required>
 
-        <input type="file" name="xray_image" id="fileInput" required>
+            <img id="preview" alt="Selected X-ray preview">
 
-        <img id="preview">
+            <br><br>
 
-        <br><br>
+            <button id="submitBtn" type="submit">Analyze</button>
 
-        <button id="submitBtn">Analyze</button>
+            <p id="loading" style="display:none;">Processing...</p>
+            <div class="loader" id="spinner"></div>
+        </form>
+    </div>
 
-        <p id="loading" style="display:none;">Processing...</p>
-        <div class="loader" id="spinner"></div>
+    <script>
+        const fileInput = document.getElementById("fileInput");
+        const preview = document.getElementById("preview");
+        const form = document.querySelector("form");
+        const spinner = document.getElementById("spinner");
+        const loading = document.getElementById("loading");
+        const button = document.getElementById("submitBtn");
 
-    </form>
-</div>
+        fileInput.addEventListener("change", function () {
+            const file = this.files[0];
 
-<script>
-const fileInput = document.getElementById("fileInput");
-const preview = document.getElementById("preview");
+            if (file) {
+                preview.src = URL.createObjectURL(file);
+                preview.style.display = "block";
+            }
+        });
 
-fileInput.addEventListener("change", function () {
-    const file = this.files[0];
-    preview.src = URL.createObjectURL(file);
-    preview.style.display = "block";
-});
-
-const form = document.querySelector("form");
-const spinner = document.getElementById("spinner");
-const loading = document.getElementById("loading");
-const button = document.getElementById("submitBtn");
-
-form.addEventListener("submit", function () {
-    spinner.style.display = "block";
-    loading.style.display = "block";
-    button.disabled = true;
-});
-</script>
-
+        form.addEventListener("submit", function () {
+            spinner.style.display = "block";
+            loading.style.display = "block";
+            button.disabled = true;
+        });
+    </script>
 </body>
 </html>

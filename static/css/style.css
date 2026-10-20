@@ -1,0 +1,119 @@
+
+body {
+    font-family: Arial, sans-serif;
+    background: linear-gradient(to right, #74ebd5, #ACB6E5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    margin: 0;
+}
+
+.container {
+    background: white;
+    padding: 30px;
+    border-radius: 15px;
+    text-align: center;
+    width: 400px;
+    max-width: calc(100% - 60px);
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+}
+
+button {
+    background: #4CAF50;
+    color: white;
+    padding: 10px 20px;
+    border-radius: 8px;
+    border: none;
+    cursor: pointer;
+}
+
+button:disabled {
+    opacity: 0.7;
+    cursor: not-allowed;
+}
+
+.loader {
+    border: 6px solid #f3f3f3;
+    border-top: 6px solid #3498db;
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+    animation: spin 1s linear infinite;
+    display: none;
+    margin: auto;
+}
+
+@keyframes spin {
+    100% {
+        transform: rotate(360deg);
+    }
+}
+
+img {
+    width: 100%;
+    display: none;
+    margin-top: 10px;
+}
+
+/* Detection result page */
+
+body.result-page {
+    display: block;
+    min-height: 100vh;
+    box-sizing: border-box;
+    font-family: Arial, sans-serif;
+    text-align: center;
+    background: #f4f6f9;
+    padding: 1px 15px 30px;
+}
+
+.card {
+    background: white;
+    padding: 20px;
+    margin: 20px auto;
+    width: 450px;
+    max-width: 100%;
+    box-sizing: border-box;
+    border-radius: 10px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+}
+
+.card img {
+    width: 100%;
+    display: block;
+    margin-top: 10px;
+    border-radius: 10px;
+}
+
+.result-status {
+    font-weight: bold;
+}
+
+.result-status.error {
+    color: red;
+}
+
+.result-status.success {
+    color: green;
+}
+
+.detection-details {
+    background: white;
+    padding: 15px;
+    border-radius: 10px;
+    margin-top: 20px;
+}
+
+.detection-item {
+    margin-bottom: 15px;
+}
+
+.confidence {
+    color: blue;
+}
+
+.upload-again {
+    display: inline-block;
+    margin: 10px 0 20px;
+}

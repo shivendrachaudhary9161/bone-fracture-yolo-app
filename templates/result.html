@@ -1,69 +1,60 @@
+
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-    <title>Result</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Detection Result</title>
 
-    <style>
-        body {
-            font-family: Arial;
-            text-align: center;
-            background: #f4f6f9;
-        }
-
-        .card {
-            background: white;
-            padding: 20px;
-            margin: 20px auto;
-            width: 450px;
-            border-radius: 10px;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
-        }
-
-        img {
-            width: 100%;
-            border-radius: 10px;
-        }
-    </style>
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='css/style.css') }}">
 </head>
 
-<body>
+<body class="result-page">
 
-<h2>🔍 Detection Result</h2>
+    <h2>🔍 Detection Result</h2>
 
-<div class="card">
-    <h3>Original</h3>
-    <img src="{{ url_for('static', filename='uploads/' + original_image) }}">
+    <div class="card">
+        <h3>Original</h3>
+        <img
+            src="{{ url_for('static', filename='uploads/' + original_image) }}"
+            alt="Original X-ray image"
+        >
 
-    <h3>Detected</h3>
-    <img src="{{ url_for('static', filename='uploads/' + annotated_image) }}">
+        <h3>Detected</h3>
+        <img
+            src="{{ url_for('static', filename='uploads/' + annotated_image) }}"
+            alt="Detected X-ray image"
+        >
 
-    <h3>Result:</h3>
-    {% if predicted %}
-        <p style="color:red;">Fracture Detected</p>
-    {% else %}
-        <p style="color:green;">No Fracture</p>
-    {% endif %}
+        <h3>Result:</h3>
 
-    <div style="background:white; padding:15px; border-radius:10px; margin-top:20px;">
-    <h3>🧠 Detection Details</h3>
+        {% if predicted %}
+            <p class="result-status error">Fracture Detected</p>
+        {% else %}
+            <p class="result-status success">No Fracture</p>
+        {% endif %}
 
-    {% for d in detections %}
-        <p style="margin-bottom:15px;">
-            🦴 <b>{{ d.label }}</b><br>
-            
-            Confidence: 
-            <span style="color:blue;">
-                {{ (d.confidence * 100) | round(2) }}%
-            </span><br>
-            
-            Box: 
-            [{{ d.box[0] }}, {{ d.box[1] }}, {{ d.box[2] }}, {{ d.box[3] }}]
-        </p>
-    {% endfor %}
-</div>
-</div>
+        <div class="detection-details">
+            <h3>🧠 Detection Details</h3>
 
-<a href="/">Upload Again</a>
+            {% for d in detections %}
+                <p class="detection-item">
+                    🦴 <b>{{ d.label }}</b><br>
+
+                    Confidence:
+                    <span class="confidence">
+                        {{ (d.confidence * 100) | round(2) }}%
+                    </span><br>
+
+                    Box:
+                    [{{ d.box[0] }}, {{ d.box[1] }}, {{ d.box[2] }}, {{ d.box[3] }}]
+                </p>
+            {% endfor %}
+        </div>
+    </div>
+
+    <a class="upload-again" href="/">Upload Again</a>
 
 </body>
 </html>
