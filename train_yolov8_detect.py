@@ -1,23 +1,33 @@
-from ultralytics import YOLO
+
 from pathlib import Path
+from ultralytics import YOLO
 
 
 def main():
-    # Use your dataset's data.yaml
-    data_yaml = Path(r"D:\bone_fracture_yolo_app\bone_fracture_yolo_app\BoneFractureYolo\data.yaml")
+    # Locate the project directory
+    project_dir = Path(__file__).resolve().parent
 
-    model = YOLO("yolov8n.pt")  # or yolov8s.pt etc.
+    # Dataset configuration
+    data_yaml = project_dir / "data" / "bone_fracture.yaml"
 
+    if not data_yaml.exists():
+        raise FileNotFoundError(
+            f"Dataset configuration not found: {data_yaml}"
+        )
+
+    # Load the YOLOv8 base model
+    model = YOLO(str(project_dir / "yolov8n.pt"))
+
+    # Train the model
     model.train(
         data=str(data_yaml),
         epochs=50,
         imgsz=640,
         batch=8,
-        project="runs",
+        project=str(project_dir / "runs"),
         name="train",
         verbose=True,
     )
-    # best.pt will be at runs/detect/train/weights/best.pt
 
 
 if __name__ == "__main__":
