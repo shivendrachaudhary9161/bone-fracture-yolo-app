@@ -4,3 +4,5 @@ __pycache__/
 *.zip
 runs/
 Bone Fracture Detection*
+static/uploads/*
+!static/uploads/.gitkeep
